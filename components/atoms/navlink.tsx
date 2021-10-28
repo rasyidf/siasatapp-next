@@ -1,6 +1,8 @@
 import { HStack, Icon, Link as ChakraLink, LinkProps, useColorModeValue as mode, Text, useBreakpointValue } from '@chakra-ui/react'
 import * as React from 'react'
 import Link from 'next/link'
+import {useRouter} from 'next/router'
+
 interface NavLinkProps extends LinkProps {
   isActive?: boolean
   isexpanded: boolean
@@ -11,16 +13,20 @@ interface NavLinkProps extends LinkProps {
 
 export const NavLink = (props: NavLinkProps) => {
   const { icon, label, to, isexpanded, ...rest } = props
+  const router = useRouter();
   const collapsed = useBreakpointValue({ base: true, md: false });
   const justifyBreak = useBreakpointValue({ base: "center", md: "left" });
-  const isActive = false;
+  const isActive = router.asPath == to;
 
   const NavIcon = (
     <Icon as={icon} boxSize="20px" mx={{ base: "auto", md: "0" }} />
   )
+  const handleClick = (e:any) => {
+    e.preventDefault()
+    router.push(to)
+  }
 
-  return (
-    <Link href={to} passHref>
+  return ( 
       <ChakraLink
         display="flex"
         py="2"
@@ -43,7 +49,7 @@ export const NavLink = (props: NavLinkProps) => {
           color: mode('white', 'white'),
         }}
         {...rest}
-
+        href={to} onClick={handleClick}
       >
         {isexpanded ? !collapsed ? (
           <HStack spacing="2" px="3">
@@ -54,7 +60,6 @@ export const NavLink = (props: NavLinkProps) => {
           NavIcon
           : NavIcon
         }
-      </ChakraLink>
-    </Link>
+      </ChakraLink> 
   )
 }

@@ -1,7 +1,7 @@
-import { Box, HStack } from '@chakra-ui/react'
+import { Box, HStack , StackProps} from '@chakra-ui/react'
 import * as React from 'react'
 import Link from 'next/link'
-interface NavItemProps {
+interface NavItemProps extends StackProps {
     href?: string
     active?: boolean
     label?: string
@@ -9,14 +9,14 @@ interface NavItemProps {
 
 interface DesktopNavItemProps extends NavItemProps {
     icon: React.ReactNode
+    onClick? : React.ReactEventHandler
 }
 
 const DesktopNavItem = (props: DesktopNavItemProps) => {
-    const { icon, label, href = '#', active } = props
-    return (
-        <Link href={href} passHref>
-            <HStack
-                
+    const { icon, label, href = '#', active, ...rest } = props
+    const Stack = (
+        <HStack
+                onClick={props.onClick}
                 aria-current={active ? 'page' : undefined}
                 spacing="2"
                 m="1"
@@ -27,6 +27,7 @@ const DesktopNavItem = (props: DesktopNavItemProps) => {
                 color="gray.200"
                 _hover={{ bg: 'whiteAlpha.200' }}
                 _activeLink={{ bg: 'blackAlpha.300', color: 'white' }}
+                {...rest}
             >
                 {icon && (
                     <Box aria-hidden fontSize="md">
@@ -35,7 +36,12 @@ const DesktopNavItem = (props: DesktopNavItemProps) => {
                 )}
                 {label && (<Box fontWeight="semibold">{label}</Box>)}
             </HStack>
-        </Link>
+    )
+    return (
+        href ? 
+        (<Link href={href} passHref>
+            {Stack}
+        </Link> ): Stack
     )
 }
 

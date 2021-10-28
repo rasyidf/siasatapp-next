@@ -1,6 +1,7 @@
 import { Box, Flex, FlexProps, HStack, Img, useBreakpointValue, useColorModeValue, useMenuButton } from '@chakra-ui/react'
 import * as React from 'react'
 import { HiSelector } from 'react-icons/hi'
+import Image from 'next/image'
 
 interface AccountSwitcherButtonProps extends FlexProps {
     selected?: string | string[]
@@ -13,7 +14,7 @@ interface AccountSwitcherButtonProps extends FlexProps {
 export const AccountSwitcherButton = (props: AccountSwitcherButtonProps) => {
     const {isexpanded, ...flexProps} = props;
     const buttonProps = useMenuButton(flexProps as FlexProps);
-    const widthBreak = useBreakpointValue({ base: "100%", sm: "56px", md: "100%" }, "100%");
+    const widthBreak = useBreakpointValue({ base: "100s", sm: "56px", md: "100%" }, "100%");
     const paddingBreak = useBreakpointValue({ base: "2", md: "4" }, "4");
     const marginBreak = useBreakpointValue({ base: "auto", sm: "auto", md: "0" }, "0");
     const displayBreak = useBreakpointValue({ base: "none", md: "block" }, "block");
@@ -24,7 +25,7 @@ export const AccountSwitcherButton = (props: AccountSwitcherButtonProps) => {
             as="button"
             {...buttonProps}
             w={props.isexpanded ? widthBreak : "100%"}
-            maxW={props.isexpanded ? widthBreak : "100%"}
+            minW="56px"
             display="flex"
             alignItems="center"
             rounded="lg"
@@ -39,8 +40,7 @@ export const AccountSwitcherButton = (props: AccountSwitcherButtonProps) => {
             _focus={{ shadow: 'outline' }}
         >
             <HStack flex="1" spacing="3">
-                <Img
-
+                <Img 
                     mx={props.isexpanded ? marginBreak : "auto"}
                     width="32px"
                     height="32px"
