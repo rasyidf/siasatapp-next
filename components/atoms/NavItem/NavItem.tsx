@@ -14,7 +14,7 @@ interface DesktopNavItemProps extends NavItemProps {
 const DesktopNavItem = (props: DesktopNavItemProps) => {
     const { icon, label, href = '#', active } = props
     return (
-        <Link href={href}>
+        <Link href={href} passHref>
             <HStack
                 
                 aria-current={active ? 'page' : undefined}
